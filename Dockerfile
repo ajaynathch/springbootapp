@@ -11,4 +11,4 @@ EXPOSE 80
 ADD target/auth-1.3.5.RELEASE.war auth-1.3.5.RELEASE.war
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/auth-1.3.5.RELEASE.war"]
+ENTRYPOINT ["java","-jar","/auth-1.3.5.RELEASE.war"]
