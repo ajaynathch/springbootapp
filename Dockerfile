@@ -2,17 +2,14 @@
 FROM openjdk:8-jdk-alpine
 
 
-# Add a volume pointing to /tmp
-VOLUME /tmp
+# Set the working directory to /app
+WORKDIR /app
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8000
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# The application's jar file
-ARG JAR_FILE=target/auth-1.3.5.RELEASE.war
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} auth-1.3.5.RELEASE.war
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/auth-1.3.5.RELEASE.war"]
+CMD ["java","-jar","target/auth-1.3.5.RELEASE.war"]
