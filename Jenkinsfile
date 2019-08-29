@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Stage') {
             steps {
-                sh 'docker stop localhost:5000/spring-boot-app:1.3.5.RELEASE'
+                
                 sh 'docker run -d -p 8081:8081 localhost:5000/spring-boot-app:1.3.5.RELEASE'
             }
         }
