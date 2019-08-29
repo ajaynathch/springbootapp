@@ -10,7 +10,7 @@ pipeline {
                 sh 'mvn dockerfile:push'
             }
         }
-        stage('Run') {
+        stage('Stage') {
             steps {
                 sh 'docker run -d -p 8081:8081 localhost:5000/spring-boot-app:1.3.5.RELEASE'
             }
@@ -19,6 +19,15 @@ pipeline {
             steps {
                 sh 'curl -sL https://github.com/ajaynathch/springbootapp/tree/master/test > /var/lib/jenkins/workspace/spring_master/test/spring.robot'
                 sh 'docker run -v ${PWD}/reports:/opt/robotframework/reports:Z -v ${PWD}/test:/opt/robotframework/tests:Z -e BROWSER=chrome ppodgorsek/robot-framework:latest'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker stop localhost:5000/spring-boot-app:1.3.5.RELEASE'
+                sh 'docker stack rm getstartedlab'
+                sh 'docker swarm leave --force'
+                sh 'docker swarm init'
+                sh 'docker stack deploy -c docker-compose.yml getstartedlab'
             }
         }
     }
