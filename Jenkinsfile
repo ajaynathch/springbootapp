@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'curl -sL https://github.com/ajaynathch/springbootapp/tree/master/test > /var/lib/jenkins/workspace/spring_master/test/spring.robot'
+                
                 sh 'docker run -v ${PWD}/reports:/opt/robotframework/reports:Z -v ${PWD}/test:/opt/robotframework/tests:Z -e BROWSER=chrome ppodgorsek/robot-framework:latest'
             }
         }
